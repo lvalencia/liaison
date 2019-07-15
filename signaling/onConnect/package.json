@@ -1,0 +1,19 @@
+{
+  "name": "@liaison/signaling-connect",
+  "version": "1.0.0",
+  "description": "Lambda to handle $connect websocket routeKey",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "liaison",
+    "signaling",
+    "$connect"
+  ],
+  "author": "Luis Valencia",
+  "license": "ISC",
+  "dependencies": {
+    "@liaison/common-dynamo-data-repository": "1.0.0"
+  }
+}

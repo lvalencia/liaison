@@ -1,0 +1,16 @@
+{
+  "name": "@liaison/common-exceptions",
+  "version": "1.0.0",
+  "description": "Custom exceptions that can be thrown across Liaison",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "liaison",
+    "common",
+    "exceptions"
+  ],
+  "author": "Luis Valencia",
+  "license": "ISC"
+}

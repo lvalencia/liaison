@@ -1,0 +1,26 @@
+{
+  "name": "@liaison/common-dynamo-data-repository",
+  "version": "1.0.0",
+  "description": "DynamoDB Data Layer Repository",
+  "main": "dataRepository.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "liaison",
+    "common",
+    "dynamo",
+    "data",
+    "layer",
+    "data",
+    "repository",
+    "data",
+    "layer",
+    "repository"
+  ],
+  "author": "Luis Valencia",
+  "license": "ISC",
+  "dependencies": {
+    "@liaison/common-exceptions": "1.0.0"
+  }
+}
