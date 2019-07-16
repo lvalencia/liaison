@@ -9,6 +9,7 @@
     "signaling/onDisconnect",
     "signaling/sendMessage",
     "common/dynamoDataRepository",
+    "common/environment",
     "common/exceptions"
   ]
 }

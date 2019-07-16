@@ -2,9 +2,10 @@
   "name": "@liaison/common-dynamo-data-repository",
   "version": "1.0.0",
   "description": "DynamoDB Data Layer Repository",
-  "main": "dataRepository.js",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx mocha ./test/**/*.spec.js",
+    "test:debug": "npx mocha debug ./test/**/*.spec.js"
   },
   "keywords": [
     "liaison",
@@ -21,6 +22,19 @@
   "author": "Luis Valencia",
   "license": "ISC",
   "dependencies": {
-    "@liaison/common-exceptions": "1.0.0"
+    "@aws/dynamodb-data-mapper": "^0.7.3",
+    "@aws/dynamodb-data-marshaller": "^0.7.3",
+    "@aws/dynamodb-expressions": "^0.7.3",
+    "@liaison/common-environment": "1.0.0",
+    "@liaison/common-exceptions": "1.0.0",
+    "amazon-dax-client": "^1.2.2",
+    "aws-sdk": "^2.493.0",
+    "module-alias": "^2.2.0",
+    "underscore": "^1.9.1"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4",
+    "sinon": "^7.3.2"
   }
 }

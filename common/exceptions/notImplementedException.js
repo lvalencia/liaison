@@ -1,7 +1,9 @@
-function NotImplementedException(message) {
-    this.message = (message || "");
+class NotImplementedException extends Error {
+    constructor(message, args) {
+        super(message);
+        this.message;
+        this.clientType = args.clientType
+    }
 }
 
-Object.setPrototypeOf(NotImplementedException, Error);
-
-module.exports = NotImplementedException;
+module.exports = { NotImplementedException };

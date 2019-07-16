@@ -1,0 +1,29 @@
+const {DynamoDbSchema, DynamoDbTable} = require('@aws/dynamodb-data-mapper');
+const {KeyTypes} = require('@aws/dynamodb-data-marshaller');
+const SignalingUser = {};
+
+Object.defineProperty(SignalingUser, DynamoDbTable, {
+    value: 'LiaisonSignaling',
+    writable: false,
+    configurable: false,
+    enumerable: false
+});
+
+Object.defineProperty(SignalingUser, DynamoDbSchema, {
+    value: {
+        connectionId: {
+            keyType: KeyTypes.HASH,
+            type: 'String'
+        },
+        channelId: {
+            type: 'String'
+        }
+    },
+    writable: false,
+    configurable: false,
+    enumerable: false
+});
+
+module.exports = {
+    SignalingUser
+};

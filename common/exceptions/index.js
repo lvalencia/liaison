@@ -1,4 +1,4 @@
-const NotImplementedException = require('./notImplementedException');
+const { NotImplementedException } = require('./notImplementedException');
 module.exports = {
     NotImplementedException
 };

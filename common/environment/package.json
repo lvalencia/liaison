@@ -1,0 +1,16 @@
+{
+  "name": "@liaison/common-environment",
+  "version": "1.0.0",
+  "description": "Environment utilities that can be used across Liaison",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "liaison",
+    "common",
+    "environment"
+  ],
+  "author": "Luis Valencia",
+  "license": "ISC"
+}

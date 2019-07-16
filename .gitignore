@@ -238,3 +238,7 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
+
+# Project Specific
+lambda.zip
+node_modules
