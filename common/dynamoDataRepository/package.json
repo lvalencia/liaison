@@ -4,6 +4,7 @@
   "description": "DynamoDB Data Layer Repository",
   "main": "index.js",
   "scripts": {
+    "clean": "echo \"Error: no clean specified\"",
     "test": "npx mocha ./test/**/*.spec.js",
     "test:debug": "npx mocha debug ./test/**/*.spec.js"
   },
@@ -27,8 +28,9 @@
     "@aws/dynamodb-expressions": "^0.7.3",
     "@liaison/common-environment": "1.0.0",
     "@liaison/common-exceptions": "1.0.0",
+    "@liaison/common-utils": "1.0.0",
     "amazon-dax-client": "^1.2.2",
-    "aws-sdk": "^2.493.0",
+    "aws-sdk": "^2.494.0",
     "module-alias": "^2.2.0",
     "underscore": "^1.9.1"
   },

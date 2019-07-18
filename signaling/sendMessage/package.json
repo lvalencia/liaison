@@ -4,7 +4,10 @@
   "description": "Lambda to handle sendMessage websocket routeKey",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "rm -rf lambda.zip lambda",
+    "release": "yarn run zip",
+    "test": "echo \"Error: no test specified\"",
+    "zip": "zip -r lambda.zip ../../node_modules *"
   },
   "keywords": [
     "liaison",
@@ -12,5 +15,10 @@
     "sendMessage"
   ],
   "author": "Luis Valencia",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@liaison/common-dynamo-data-repository": "1.0.0",
+    "aws-sdk": "^2.494.0",
+    "http-status-codes": "^1.3.2"
+  }
 }

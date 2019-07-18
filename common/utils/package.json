@@ -1,0 +1,17 @@
+{
+  "name": "@liaison/common-utils",
+  "version": "1.0.0",
+  "description": "Common utilities that can be used across Liaison",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "liaison",
+    "common",
+    "utils",
+    "utilities"
+  ],
+  "author": "Luis Valencia",
+  "license": "ISC"
+}

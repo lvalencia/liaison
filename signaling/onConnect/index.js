@@ -4,6 +4,7 @@ const {
         SignalingUser
     }
 } = require('@liaison/common-dynamo-data-repository');
+const http = require('http-status-codes');
 
 exports.handler =  async function(event, context) {
     context.callbackWaitsForEmptyEventLoop = false;
@@ -12,14 +13,20 @@ exports.handler =  async function(event, context) {
 
     const {
         requestContext: {
-            connectionId
+            connectionId,
         }
     } = event;
 
-    const user = {connectionId};
+    const user = {
+        connectionId,
+        channelId: connectionId
+    };
     Object.setPrototypeOf(user, SignalingUser);
 
     await dataRepo.create(user);
 
-    return { statusCode: 201, body: `User ${user.connectionId} Created` };
+    return {
+        statusCode: http.CREATED,
+        body: `User ${user.connectionId} Created`
+    };
 };

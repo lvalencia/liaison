@@ -4,12 +4,10 @@
   "description": "Lambda to handle $connect websocket routeKey",
   "main": "index.js",
   "scripts": {
-    "build": "yarn install",
-    "clean": "rm -rf node_modules lambda.zip lambda",
-    "postinstall": "ln -s ../../node_modules node_modules",
-    "release": "yarn run build && yarn run zip",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "zip": "zip -r lambda.zip * -x *signaling-connect*"
+    "clean": "rm -rf lambda.zip lambda",
+    "release": "yarn run zip",
+    "test": "echo \"Error: no test specified\"",
+    "zip": "zip -r lambda.zip ../../node_modules *"
   },
   "keywords": [
     "liaison",
@@ -19,6 +17,7 @@
   "author": "Luis Valencia",
   "license": "ISC",
   "dependencies": {
-    "@liaison/common-dynamo-data-repository": "1.0.0"
+    "@liaison/common-dynamo-data-repository": "1.0.0",
+    "http-status-codes": "^1.3.2"
   }
 }

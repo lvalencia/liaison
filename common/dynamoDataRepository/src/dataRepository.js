@@ -1,4 +1,5 @@
 const {DataMapper} = require('@aws/dynamodb-data-mapper');
+const {objectToClass} = require('@liaison/common-utils');
 const _ = require('underscore');
 const util = require('util');
 const {CreateDynamoClient} = require('./dyanmoClient');
@@ -6,10 +7,15 @@ const {mustNotExist, mustExist} = require('./dynamoConditions');
 
 // @TODO - Centralized Structured Logger w/ pino as backbone
 
+const ReadConsistency = {
+    STRONG: 'strong',
+    EVENTUAL: 'eventual'
+}
+
 function CreateDataRepository(args = {}) {
     const mapper = args.mapper || new DataMapper({
         client: CreateDynamoClient(),
-        readConsistency: 'strong',
+        readConsistency: ReadConsistency.STRONG,
         skipVersionCheck: false
     });
     const repo = {mapper};
@@ -71,6 +77,25 @@ const DataRepository = {
         })}`);
 
         return result;
+    },
+    async query(item, options) {
+        const defaultOptions = {
+            readConsistency: ReadConsistency.EVENTUAL
+        };
+
+        const Item = objectToClass(item);
+
+        const items = [];
+        for await (const record of this.mapper.query(Item, item, _.extend(defaultOptions, options))) {
+            items.push(record);
+        }
+
+        console.log(`DataRepository#query ${util.inspect({
+            input: item,
+            output: items
+        })}`);
+
+        return items;
     }
 };
 

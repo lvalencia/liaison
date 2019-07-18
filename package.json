@@ -10,6 +10,7 @@
     "signaling/sendMessage",
     "common/dynamoDataRepository",
     "common/environment",
-    "common/exceptions"
+    "common/exceptions",
+    "common/utils"
   ]
 }

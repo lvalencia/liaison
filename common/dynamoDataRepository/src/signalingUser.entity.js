@@ -24,6 +24,11 @@ Object.defineProperty(SignalingUser, DynamoDbSchema, {
     enumerable: false
 });
 
+const CHANNEL_ID_CONNECTION_ID_INDEX = 'channelId-connectionId-index';
+
 module.exports = {
-    SignalingUser
+    SignalingUser,
+    SignalingUserIndices: {
+        CHANNEL_ID_CONNECTION_ID_INDEX
+    }
 };
