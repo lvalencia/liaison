@@ -1,6 +1,6 @@
 const AWS = require('aws-sdk');
 const AmazonDaxClient = require('amazon-dax-client');
-const { isLambda } = require('@liaison/common-environment');
+const { isLambda } = require('@liaison/common-utils');
 const _ = require('underscore');
 
 const ClientTypes = {

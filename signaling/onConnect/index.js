@@ -3,7 +3,7 @@ const {
     Entities: {
         SignalingUser
     }
-} = require('@liaison/common-dynamo-data-repository');
+} = require('@liaison/common-data-repository');
 const http = require('http-status-codes');
 
 exports.handler =  async function(event, context) {
@@ -13,7 +13,7 @@ exports.handler =  async function(event, context) {
 
     const {
         requestContext: {
-            connectionId,
+            connectionId
         }
     } = event;
 
@@ -22,7 +22,6 @@ exports.handler =  async function(event, context) {
         channelId: connectionId
     };
     Object.setPrototypeOf(user, SignalingUser);
-
     await dataRepo.create(user);
 
     return {

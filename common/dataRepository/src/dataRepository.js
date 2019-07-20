@@ -1,5 +1,5 @@
 const {DataMapper} = require('@aws/dynamodb-data-mapper');
-const {objectToClass} = require('@liaison/common-utils');
+const {objectToClassConstructor} = require('@liaison/common-utils');
 const _ = require('underscore');
 const util = require('util');
 const {CreateDynamoClient} = require('./dyanmoClient');
@@ -83,7 +83,7 @@ const DataRepository = {
             readConsistency: ReadConsistency.EVENTUAL
         };
 
-        const Item = objectToClass(item);
+        const Item = objectToClassConstructor(item);
 
         const items = [];
         for await (const record of this.mapper.query(Item, item, _.extend(defaultOptions, options))) {

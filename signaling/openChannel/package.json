@@ -4,8 +4,10 @@
   "description": "Lambda to handle openChannel websocket routeKey",
   "main": "index.js",
   "scripts": {
-    "clean": "echo \"Error: no clean specified\"",
-    "test": "echo \"Error: no test specified\""
+    "clean": "rm -rf lambda.zip lambda",
+    "release": "yarn run zip",
+    "test": "echo \"Error: no test specified\"",
+    "zip": "zip -r lambda.zip ../../node_modules *"
   },
   "keywords": [
     "liaison",
@@ -13,5 +15,9 @@
     "closeChannel"
   ],
   "author": "Luis Valencia",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@liaison/common-communication": "1.0.0",
+    "uuid": "^3.3.2"
+  }
 }

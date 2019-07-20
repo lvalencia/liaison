@@ -1,28 +1,23 @@
-// @TODO - Clean up this code, it's dogshit
+const http = require('http-status-codes');
 const {
     CreateDataRepository,
     Entities: {
         SignalingUser,
         SignalingUserIndices
     }
-} = require('@liaison/common-dynamo-data-repository');
-const {ApiGatewayManagementApi} = require('aws-sdk');
-const http = require('http-status-codes');
-const util = require('util');
-const {
-    NoChannelSpecifiedException,
-    NoDataAttributeInMessageException
-} = require('./exceptions');
+} = require('@liaison/common-data-repository');
+const {ConnectionResponder} = require('@liaison/common-communication');
+const {RespondableAttributeMissingException} = require('./exceptions');
 
 function validateAndExtractPayload(event) {
     const body = JSON.parse(event.body);
     if (!body.hasOwnProperty('data')) {
-        throw new NoDataAttributeInMessageException("Message payload is missing attribute 'data'", body);
+        throw new RespondableAttributeMissingException("Message payload is missing attribute 'data'", body);
     }
     const {data} = body;
 
     if (!body.hasOwnProperty('channel')) {
-        throw new NoChannelSpecifiedException("Message does not specify a channel to send messages to", data);
+        throw new RespondableAttributeMissingException("Message does not specify a channel to send messages to", data);
     }
     const {channel} = body;
 
@@ -32,50 +27,47 @@ function validateAndExtractPayload(event) {
     };
 }
 
-async function respondTo({responder, connection, data}) {
-    console.log(`index#respondTo sending data to ${connection}: ${data}`);
-    await responder.postToConnection({
-        ConnectionId: connection,
-        Data: data
-    }).promise();
-}
-
 exports.handler = async function (event, context) {
     context.callbackWaitsForEmptyEventLoop = false;
 
     const {
         requestContext: {
+            connectionId,
             domainName,
-            stage,
-            connectionId
+            stage
         }
     } = event;
 
-    const apigwManagementApi = new ApiGatewayManagementApi({
-        endpoint: `${domainName}/${stage}`
-    });
+    const responder = {
+        domainName,
+        stage,
+    };
+    Object.setPrototypeOf(responder, ConnectionResponder);
 
-    let channel, data;
+
+    let payload;
     try {
-        const payload = validateAndExtractPayload(event);
-        channel = payload.channel;
-        data = payload.data;
+        payload = validateAndExtractPayload(event);
     } catch (e) {
-        await respondTo({
-            responder: apigwManagementApi,
+        Object.assign(responder, {
             connection: connectionId,
-            data: JSON.stringify(e)
+            data: e
         });
+        await responder.respond();
 
         return {
             statusCode: http.BAD_REQUEST,
             body: e.stack
         }
     }
+    Object.assign(responder, {
+        data: payload.data
+    });
 
     const dataRepo = CreateDataRepository();
+
     const user = {
-        channelId: channel
+        channelId: payload.channel
     };
     Object.setPrototypeOf(user, SignalingUser);
 
@@ -85,28 +77,23 @@ exports.handler = async function (event, context) {
 
     await connections.forEach(async (user) => {
         const {connectionId} = user;
+        Object.assign(responder, {
+            connection: connectionId
+        });
         try {
-            await respondTo({
-                responder: apigwManagementApi,
-                connection: connectionId,
-                data: JSON.stringify(data)
-            });
+            await responder.respond();
         } catch (e) {
             if (e.statusCode === http.GONE) {
                 console.log(`Found stale connection, deleting ${connectionId}`);
 
-                const userToDelete = Object.assign(
-                    Object.create(SignalingUser),
-                    {connectionId}
-                );
+                const userToDelete = {
+                    connectionId
+                };
+                Object.setPrototypeOf(userToDelete, SignalingUser);
 
                 await dataRepo.delete(userToDelete);
             } else {
-                console.log(util.inspect(e));
-                return {
-                    statusCode: http.INTERNAL_SERVER_ERROR,
-                    body: e.stack
-                }
+                throw(e);
             }
         }
     });

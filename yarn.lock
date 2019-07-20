@@ -137,9 +137,10 @@ aws-sdk@>=2.365.0:
     uuid "3.3.2"
     xml2js "0.4.19"
 
-aws-sdk@^2.494.0:
-  version "2.494.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.494.0.tgz#fdfda21009765774a25e592c8cc4f8db51018ce5"
+aws-sdk@^2.496.0:
+  version "2.496.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.496.0.tgz#073bf36ed868891a656a895bf2c548b2d0bc3588"
+  integrity sha512-6xZ//phdvp7/dUZjOdDsorl+xehhkAgxOMber9vUlMO9ckBOeufIvED7oKF0NvSlfG8laHK4JprXKQvhXqVLqA==
   dependencies:
     buffer "4.9.1"
     events "1.1.1"
@@ -849,6 +850,7 @@ type-detect@4.0.8, type-detect@^4.0.0, type-detect@^4.0.5:
 underscore@^1.9.1:
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.9.1.tgz#06dce34a0e68a7babc29b365b8e74b8925203961"
+  integrity sha512-5/4etnCkd9c8gwgowi5/om/mYO5ajCaOgdzj/oW+0eQV9WxKBDZw5+ycmKmeaTXjInS/W0BzpGLo2xR2aBwZdg==
 
 url@0.10.3:
   version "0.10.3"

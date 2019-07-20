@@ -6,4 +6,6 @@ class NotImplementedException extends Error {
     }
 }
 
-module.exports = { NotImplementedException };
+module.exports = {
+    NotImplementedException
+};

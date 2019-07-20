@@ -17,8 +17,10 @@
   "author": "Luis Valencia",
   "license": "ISC",
   "dependencies": {
-    "@liaison/common-dynamo-data-repository": "1.0.0",
-    "aws-sdk": "^2.494.0",
+    "@liaison/common-communication": "1.0.0",
+    "@liaison/common-data-repository": "1.0.0",
+    "@liaison/common-exceptions": "1.0.0",
+    "aws-sdk": "^2.496.0",
     "http-status-codes": "^1.3.2"
   }
 }

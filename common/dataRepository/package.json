@@ -1,7 +1,7 @@
 {
-  "name": "@liaison/common-dynamo-data-repository",
+  "name": "@liaison/common-data-repository",
   "version": "1.0.0",
-  "description": "DynamoDB Data Layer Repository",
+  "description": "Data Layer Repository",
   "main": "index.js",
   "scripts": {
     "clean": "echo \"Error: no clean specified\"",
@@ -14,10 +14,6 @@
     "dynamo",
     "data",
     "layer",
-    "data",
-    "repository",
-    "data",
-    "layer",
     "repository"
   ],
   "author": "Luis Valencia",
@@ -26,11 +22,10 @@
     "@aws/dynamodb-data-mapper": "^0.7.3",
     "@aws/dynamodb-data-marshaller": "^0.7.3",
     "@aws/dynamodb-expressions": "^0.7.3",
-    "@liaison/common-environment": "1.0.0",
     "@liaison/common-exceptions": "1.0.0",
     "@liaison/common-utils": "1.0.0",
     "amazon-dax-client": "^1.2.2",
-    "aws-sdk": "^2.494.0",
+    "aws-sdk": "^2.496.0",
     "module-alias": "^2.2.0",
     "underscore": "^1.9.1"
   },

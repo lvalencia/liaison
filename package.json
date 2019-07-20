@@ -8,8 +8,8 @@
     "signaling/onConnect",
     "signaling/onDisconnect",
     "signaling/sendMessage",
-    "common/dynamoDataRepository",
-    "common/environment",
+    "common/communication",
+    "common/dataRepository",
     "common/exceptions",
     "common/utils"
   ]

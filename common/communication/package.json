@@ -1,7 +1,7 @@
 {
-  "name": "@liaison/common-utils",
+  "name": "@liaison/common-communication",
   "version": "1.0.0",
-  "description": "Common utilities that can be used across Liaison",
+  "description": "Communications layer",
   "main": "index.js",
   "scripts": {
     "clean": "echo \"Error: no clean specified\"",
@@ -10,9 +10,13 @@
   "keywords": [
     "liaison",
     "common",
-    "utils",
-    "utilities"
+    "communication"
   ],
   "author": "Luis Valencia",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@liaison/common-exceptions": "1.0.0",
+    "aws-sdk": "^2.496.0",
+    "underscore": "^1.9.1"
+  }
 }
