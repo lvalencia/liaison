@@ -24,7 +24,7 @@ function CreateDataRepository(args = {}) {
 }
 
 const DataRepository = {
-    async create(item, options) {
+    async createAsync(item, options) {
         const defaultOptions = {
             skipVersionCheck: true,
             condition: mustNotExist(item)
@@ -38,7 +38,7 @@ const DataRepository = {
 
         return result;
     },
-    async delete(item, options) {
+    async deleteAsync(item, options) {
         const defaultOptions = {
             returnValues: 'NONE'
         };
@@ -52,7 +52,7 @@ const DataRepository = {
 
         return result;
     },
-    async update(item, options) {
+    async updateAsync(item, options) {
         const defaultOptions = {
             condition: mustExist(item)
         };
@@ -66,7 +66,7 @@ const DataRepository = {
 
         return result;
     },
-    async read(item, options) {
+    async readAsync(item, options) {
         const defaultOptions = {};
 
         const result = await this.mapper.get(item, _.extend(defaultOptions, options));
@@ -78,7 +78,7 @@ const DataRepository = {
 
         return result;
     },
-    async query(item, options) {
+    async queryAsync(item, options) {
         const defaultOptions = {
             readConsistency: ReadConsistency.EVENTUAL
         };

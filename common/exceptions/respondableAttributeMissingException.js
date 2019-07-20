@@ -1,4 +1,4 @@
-const { AttributeMissingException } = require('@liaison/common-exceptions');
+const { AttributeMissingException } = require('./attributeMissingException');
 
 class RespondableAttributeMissingException extends AttributeMissingException {
     constructor(message, args) {

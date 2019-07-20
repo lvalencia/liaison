@@ -29,7 +29,7 @@ exports.handler = async function (event, context) {
         channelId
     };
     Object.setPrototypeOf(user, SignalingUser);
-    await dataRepo.create(user);
+    await dataRepo.createAsync(user);
 
     const responder = {
         domainName,
@@ -43,7 +43,7 @@ exports.handler = async function (event, context) {
         }
     };
     Object.setPrototypeOf(responder, ConnectionResponder);
-    await responder.respond();
+    await responder.respondAsync();
 
     return {
         statusCode: http.CREATED,

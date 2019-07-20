@@ -1,4 +1,6 @@
+const {ConnectionResponder} = require('@liaison/common-communication');
 const http = require('http-status-codes');
+
 const {
     CreateDataRepository,
     Entities: {
@@ -6,8 +8,6 @@ const {
         SignalingUserIndices
     }
 } = require('@liaison/common-data-repository');
-const {ConnectionResponder} = require('@liaison/common-communication');
-
 const {
     PayloadExtractor,
     PayloadValidator
@@ -15,6 +15,8 @@ const {
 
 exports.handler = async function (event, context) {
     context.callbackWaitsForEmptyEventLoop = false;
+
+    const dataRepo = CreateDataRepository();
 
     const {
         requestContext: {
@@ -33,8 +35,7 @@ exports.handler = async function (event, context) {
     const validateAndExtract = {
         event,
         attributes: [
-            'channel',
-            'data'
+            'channel'
         ]
     };
     try {
@@ -53,20 +54,36 @@ exports.handler = async function (event, context) {
         }
     }
     Object.setPrototypeOf(validateAndExtract, PayloadExtractor);
-    const {data, channel} = validateAndExtract.extract();
+    const {
+        channel: channelId
+    } = validateAndExtract.extract();
 
-    Object.assign(responder, {data});
-
-    const dataRepo = CreateDataRepository();
+    const user = {
+        connectionId,
+        channelId
+    };
+    Object.setPrototypeOf(user, SignalingUser);
+    await dataRepo.createAsync(user);
 
     const queryUsers = {
-        channelId: channel
+        channelId
     };
     Object.setPrototypeOf(queryUsers, SignalingUser);
 
     let connections = await dataRepo.queryAsync(queryUsers, {
         indexName: SignalingUserIndices.CHANNEL_ID_CONNECTION_ID_INDEX
     });
+
+    Object.assign(responder, {
+        data: {
+            action: 'joinChannel',
+            user: connectionId,
+            channel: channelId,
+            message: `${connectionId} has joined the channel ${channelId}`
+        }
+    });
+
+    // @TODO - Handle the case where you try to join a room you're already in
 
     await responder.respondAllAsync({
         connections,
@@ -76,6 +93,6 @@ exports.handler = async function (event, context) {
 
     return {
         statusCode: http.OK,
-        body: 'Message sent.'
+        body: `Connection ${connectionId} joined Channel ${channelId}`
     };
 };

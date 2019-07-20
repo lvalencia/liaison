@@ -22,10 +22,10 @@ exports.handler =  async function(event, context) {
         channelId: connectionId
     };
     Object.setPrototypeOf(user, SignalingUser);
-    await dataRepo.create(user);
+    await dataRepo.createAsync(user);
 
     return {
         statusCode: http.CREATED,
-        body: `User ${user.connectionId} Created`
+        body: `Connection ${user.connectionId} Created`
     };
 };

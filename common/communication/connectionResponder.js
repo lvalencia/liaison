@@ -1,5 +1,7 @@
 const {ApiGatewayManagementApi} = require('aws-sdk');
+const http = require('http-status-codes');
 const _ = require('underscore');
+const util = require('util');
 const {AttributeMissingException} = require('@liaison/common-exceptions');
 const {ResponderProtocolException} = require('./exceptions');
 
@@ -31,12 +33,12 @@ const ConnectionResponder = {
         }
 
         requiredAttributes.forEach((attribute) => {
-        if (!this.hasOwnProperty(attribute) || _.isEmpty(this[attribute])) {
+            if (!this.hasOwnProperty(attribute) || _.isEmpty(this[attribute])) {
                 throw new AttributeMissingException(`Object does not specify attribute ${attribute}`, this);
             }
         });
     },
-    async respond() {
+    async respondAsync() {
         this.validateCanSend();
 
         const data = JSON.stringify(this.data);
@@ -53,6 +55,45 @@ const ConnectionResponder = {
             await request.promise();
         } else {
             throw new ResponderProtocolException('Responder#postToConnection result is not a promise, nor does it provide a method `promise`', this);
+        }
+    },
+    async respondAllAsync({connections, repo, entity}) {
+        console.log(`ConnectionResponder#respondAllAsync responding to ${util.inspect(connections)}`);
+
+        const responses = connections.map(async (connection) => {
+            const {connectionId, channelId} = connection;
+            Object.assign(this, {
+                connection: connectionId
+            });
+            try {
+                await this.respondAsync();
+            } catch (e) {
+                if (e.statusCode === http.GONE) {
+                    console.log(`ConnectionResponder#respondAllAsync found stale connection ${connectionId}`);
+
+                    if (!_.isEmpty(repo)) {
+                        console.log(`ConnectionResponder#respondAllAsync deleting connection ${connectionId}`);
+
+                        // @TODO - Make creation of this object generic, so it's independent of key changes
+                        //         i.e. use getKeyNames to construct object
+
+                        const connectionToDelete = {
+                            connectionId,
+                            channelId
+                        };
+                        Object.setPrototypeOf(connectionToDelete, entity);
+
+                        await repo.deleteAsync(connectionToDelete);
+                    }
+                } else {
+                    throw(e);
+                }
+            }
+        });
+
+        if (!_.isEmpty(responses)) {
+            console.log(`ConnectionResponder#respondAllAsync awaiting all responses ${util.inspect(responses)}`);
+            await Promise.all(responses);
         }
     }
 };

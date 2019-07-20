@@ -16,6 +16,7 @@ Object.defineProperty(SignalingUser, DynamoDbSchema, {
             type: 'String'
         },
         channelId: {
+            keyType: KeyTypes.RANGE,
             type: 'String'
         }
     },
