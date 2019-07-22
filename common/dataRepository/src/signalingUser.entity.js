@@ -18,6 +18,9 @@ Object.defineProperty(SignalingUser, DynamoDbSchema, {
         channelId: {
             keyType: KeyTypes.RANGE,
             type: 'String'
+        },
+        ttl: {
+            type: 'Number'
         }
     },
     writable: false,

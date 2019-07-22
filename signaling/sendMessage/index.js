@@ -1,4 +1,5 @@
 const http = require('http-status-codes');
+const _ = require('underscore');
 const {
     CreateDataRepository,
     Entities: {
@@ -55,7 +56,7 @@ exports.handler = async function (event, context) {
     Object.setPrototypeOf(validateAndExtract, PayloadExtractor);
     const {data, channel} = validateAndExtract.extract();
 
-    Object.assign(responder, {data});
+    Object.assign(responder, _.extend({data}, {_sender:connectionId}));
 
     const dataRepo = CreateDataRepository();
 
@@ -68,11 +69,7 @@ exports.handler = async function (event, context) {
         indexName: SignalingUserIndices.CHANNEL_ID_CONNECTION_ID_INDEX
     });
 
-    await responder.respondAllAsync({
-        connections,
-        repo: dataRepo,
-        entity: SignalingUser
-    });
+    await responder.respondAllAsync({connections});
 
     return {
         statusCode: http.OK,
