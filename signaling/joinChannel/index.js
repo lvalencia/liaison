@@ -1,3 +1,10 @@
+/*
+ * @TODO's
+ *   Set TTL
+ *   Case where you try to join a channel you're already in
+ *   Case where you try to join a channel that doesn't exist
+ *   Case where you've been blocked from a channel
+ */
 const {ConnectionResponder} = require('@liaison/common-communication');
 const http = require('http-status-codes');
 
@@ -9,6 +16,7 @@ const {
     }
 } = require('@liaison/common-data-repository');
 const {
+    addMinutesToDate,
     PayloadExtractor,
     PayloadValidator
 } = require('@liaison/common-utils');
@@ -60,8 +68,13 @@ exports.handler = async function (event, context) {
 
     const user = {
         connectionId,
-        channelId
+        channelId,
+        ttl: addMinutesToDate({
+            date: new Date(),
+            minutes: 5
+        }).getTime()
     };
+
     Object.setPrototypeOf(user, SignalingUser);
     await dataRepo.createAsync(user);
 
@@ -83,13 +96,7 @@ exports.handler = async function (event, context) {
         }
     });
 
-    // @TODO - Handle the case where you try to join a room you're already in
-
-    await responder.respondAllAsync({
-        connections,
-        repo: dataRepo,
-        entity: SignalingUser
-    });
+    await responder.respondAllAsync({connections});
 
     return {
         statusCode: http.OK,

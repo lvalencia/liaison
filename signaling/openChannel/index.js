@@ -1,3 +1,7 @@
+/*
+ * @TODO - Set TTL
+ */
+
 const {ConnectionResponder} = require('@liaison/common-communication');
 const http = require('http-status-codes');
 const uuid = require('uuid/v1');
@@ -8,6 +12,7 @@ const {
         SignalingUser
     }
 } = require('@liaison/common-data-repository');
+const {addMinutesToDate} = require('@liaison/common-utils');
 
 exports.handler = async function (event, context) {
     context.callbackWaitsForEmptyEventLoop = false;
@@ -26,7 +31,11 @@ exports.handler = async function (event, context) {
 
     const user = {
         connectionId,
-        channelId
+        channelId,
+        ttl: addMinutesToDate({
+            date: new Date(),
+            minutes: 5
+        }).getTime()
     };
     Object.setPrototypeOf(user, SignalingUser);
     await dataRepo.createAsync(user);
@@ -37,9 +46,7 @@ exports.handler = async function (event, context) {
         connection: connectionId,
         data: {
             action: 'openChannel',
-            data: {
-                channel: channelId
-            }
+            channel: channelId
         }
     };
     Object.setPrototypeOf(responder, ConnectionResponder);

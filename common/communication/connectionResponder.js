@@ -1,3 +1,8 @@
+/*
+ * @TODO's
+ *   Return list of stale connections in respondAllAsync to channel that initiated request
+ *   Make creation of delete object in respondAllAsync generic, so it's independent of key changes, i.e. use getKeyNames to construct object
+ */
 const {ApiGatewayManagementApi} = require('aws-sdk');
 const http = require('http-status-codes');
 const _ = require('underscore');
@@ -74,8 +79,6 @@ const ConnectionResponder = {
                     if (!_.isEmpty(repo)) {
                         console.log(`ConnectionResponder#respondAllAsync deleting connection ${connectionId}`);
 
-                        // @TODO - Make creation of this object generic, so it's independent of key changes
-                        //         i.e. use getKeyNames to construct object
 
                         const connectionToDelete = {
                             connectionId,

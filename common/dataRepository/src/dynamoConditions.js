@@ -1,9 +1,10 @@
+/*
+ * @TODO - Add Filter Expression for excluding TTL items
+ */
 const {getSchema} = require('@aws/dynamodb-data-mapper');
 const {AttributePath, FunctionExpression} = require('@aws/dynamodb-expressions');
 const _ = require('underscore');
 const { KeyMissingException } = require('./exceptions');
-
-const util = require('util');
 
 const KeyTypes = {
     HASH: 'HASH',
