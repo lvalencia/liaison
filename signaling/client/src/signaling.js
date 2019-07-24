@@ -113,8 +113,14 @@ const Signaling = {
     },
     _messagesHandler(event) {
         const message = JSON.parse(event.data);
-        const {callback} = _.findWhere(this.events, {eventName: message.action});
-        callback(message);
+
+        if (message.action) {
+            const {callback} = _.findWhere(this.events, {eventName: message.action});
+            callback(message);
+        } else {
+            console.log(`Cannot Handle message.action undefined for message: ${JSON.stringify(message)}`);
+        }
+
     },
     _openChannelCallback(message) {
         const {
@@ -153,27 +159,25 @@ const Signaling = {
         let dataChannel;
         if (createDataChannel){
             dataChannel = rtcPeerConnection.createDataChannel(label);
-            dataChannel.onmessage = (function (message) {
-                console.log(`${this.id} received from ${label} the following: ${message}`);
+            dataChannel.onmessage = this.messageCallback;
+        } else {
+            rtcPeerConnection.ondatachannel = (function ({channel}) {
+                this._addDataChannel({channel, label});
             }).bind(this);
         }
-
-        rtcPeerConnection.ondatachannel = (function ({channel}) {
-            console.log(`${this.id} received from ${channel.label} the following: ${channel}`);
-            let connection = _.find(this.rtcConnections, (connection) => {
-                return connection.label === label;
-            });
-            connection.dataChannel = channel;
-            connection.dataChannel.onmessage = (function (message) {
-                console.log(`${this.id} received from ${label} the following: ${message}`);
-            }).bind(this);
-        }).bind(this);
 
         return {
             label,
             dataChannel,
             rtcPeerConnection
         }
+    },
+    _addDataChannel({channel, label}) {
+        let connection = _.find(this.rtcConnections, (connection) => {
+            return connection.label === label;
+        });
+        connection.dataChannel = channel;
+        connection.dataChannel.onmessage = this.messageCallback;
     },
     async _establishConnection({rtcPeerConnection, channel, member}){
         try {

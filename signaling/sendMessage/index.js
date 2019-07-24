@@ -72,8 +72,6 @@ exports.handler = async function (event, context) {
     };
 
     const rawPayload = validateAndExtract.extractRawPayload();
-    const util = require('util');
-    console.log(`RAW PAYLOAD ${util.inspect(rawPayload)}`);
     if (rawPayload.hasOwnProperty('meta')) {
         const {
             meta: {
@@ -96,8 +94,6 @@ exports.handler = async function (event, context) {
         });
     }
     _.extend(data, {meta});
-
-    console.log(`SENDING ${util.inspect(data)} to ${util.inspect(connections)}`);
 
     Object.assign(responder, {data});
 
