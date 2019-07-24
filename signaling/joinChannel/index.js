@@ -1,6 +1,5 @@
 /*
  * @TODO's
- *   Set TTL
  *   Case where you try to join a channel you're already in
  *   Case where you try to join a channel that doesn't exist
  *   Case where you've been blocked from a channel
@@ -16,7 +15,7 @@ const {
     }
 } = require('@liaison/common-data-repository');
 const {
-    addMinutesToDate,
+    MutableDate,
     PayloadExtractor,
     PayloadValidator
 } = require('@liaison/common-utils');
@@ -66,13 +65,16 @@ exports.handler = async function (event, context) {
         channel: channelId
     } = validateAndExtract.extract();
 
+    const mutableDate = {
+        date: new Date()
+    };
+    Object.setPrototypeOf(mutableDate, MutableDate);
+    mutableDate.addMinutes(5);
+
     const user = {
         connectionId,
         channelId,
-        ttl: addMinutesToDate({
-            date: new Date(),
-            minutes: 5
-        }).getTime()
+        ttl: mutableDate.getSecondsSinceLinuxEpoch()
     };
 
     Object.setPrototypeOf(user, SignalingUser);
@@ -89,10 +91,16 @@ exports.handler = async function (event, context) {
 
     Object.assign(responder, {
         data: {
+            meta: {
+                sender: connectionId
+            },
             action: 'joinChannel',
-            user: connectionId,
-            channel: channelId,
-            message: `${connectionId} has joined the channel ${channelId}`
+            data: {
+                user: connectionId,
+                channel: channelId,
+                members: connections.map(({connectionId}) => connectionId),
+                message: `user ${connectionId} has joined channel ${channelId}`
+            }
         }
     });
 
