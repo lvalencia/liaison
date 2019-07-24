@@ -35,7 +35,7 @@ exports.handler = async function (event, context) {
         event,
         attributes: [
             'channel',
-            'data'
+            'data',
         ]
     };
     try {
@@ -56,8 +56,6 @@ exports.handler = async function (event, context) {
     Object.setPrototypeOf(validateAndExtract, PayloadExtractor);
     const {data, channel} = validateAndExtract.extract();
 
-    Object.assign(responder, _.extend({data}, {_sender:connectionId}));
-
     const dataRepo = CreateDataRepository();
 
     const queryUsers = {
@@ -68,6 +66,40 @@ exports.handler = async function (event, context) {
     let connections = await dataRepo.queryAsync(queryUsers, {
         indexName: SignalingUserIndices.CHANNEL_ID_CONNECTION_ID_INDEX
     });
+
+    const meta = {
+        sender: connectionId,
+    };
+
+    const rawPayload = validateAndExtract.extractRawPayload();
+    const util = require('util');
+    console.log(`RAW PAYLOAD ${util.inspect(rawPayload)}`);
+    if (rawPayload.hasOwnProperty('meta')) {
+        const {
+            meta: {
+                recipient,
+                sender
+            }
+        } = rawPayload;
+
+        _.extend(meta,  _.pick({recipient, sender}, _.identity));
+
+        connections = _.filter(connections, ({connectionId}) => {
+            let bool = true;
+            if (recipient) {
+                bool = bool && (connectionId === recipient);
+            }
+            if (sender) {
+                bool = bool && (connectionId !== sender);
+            }
+            return bool;
+        });
+    }
+    _.extend(data, {meta});
+
+    console.log(`SENDING ${util.inspect(data)} to ${util.inspect(connections)}`);
+
+    Object.assign(responder, {data});
 
     await responder.respondAllAsync({connections});
 

@@ -1,7 +1,3 @@
-/*
- * @TODO - Set TTL
- */
-
 const {ConnectionResponder} = require('@liaison/common-communication');
 const http = require('http-status-codes');
 const uuid = require('uuid/v1');
@@ -12,7 +8,7 @@ const {
         SignalingUser
     }
 } = require('@liaison/common-data-repository');
-const {addMinutesToDate} = require('@liaison/common-utils');
+const {MutableDate} = require('@liaison/common-utils');
 
 exports.handler = async function (event, context) {
     context.callbackWaitsForEmptyEventLoop = false;
@@ -29,13 +25,16 @@ exports.handler = async function (event, context) {
 
     const channelId = uuid();
 
+    const mutableDate = {
+        date: new Date()
+    };
+    Object.setPrototypeOf(mutableDate, MutableDate);
+    mutableDate.addMinutes(5);
+
     const user = {
         connectionId,
         channelId,
-        ttl: addMinutesToDate({
-            date: new Date(),
-            minutes: 5
-        }).getTime()
+        ttl: mutableDate.getSecondsSinceLinuxEpoch()
     };
     Object.setPrototypeOf(user, SignalingUser);
     await dataRepo.createAsync(user);
@@ -45,6 +44,9 @@ exports.handler = async function (event, context) {
         stage,
         connection: connectionId,
         data: {
+            meta: {
+                sender: connectionId
+            },
             action: 'openChannel',
             channel: channelId
         }

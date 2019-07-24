@@ -2,8 +2,11 @@ const _ = require('underscore');
 
 const PayloadExtractor = {
     extract() {
-        const body = JSON.parse(this.event.body);
+        const body = this.extractRawPayload();
         return _.pick(body, this.attributes);
+    },
+    extractRawPayload() {
+        return JSON.parse(this.event.body);
     }
 };
 
