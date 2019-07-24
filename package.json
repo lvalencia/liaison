@@ -2,11 +2,7 @@
   "private": true,
   "workspaces": [
     "signaling/openChannel",
-    "signaling/closeChannel",
     "signaling/joinChannel",
-    "signaling/leaveChannel",
-    "signaling/onConnect",
-    "signaling/onDisconnect",
     "signaling/sendMessage",
     "common/communication",
     "common/dataRepository",
