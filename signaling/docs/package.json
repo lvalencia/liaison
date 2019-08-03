@@ -1,0 +1,21 @@
+{
+  "name": "@liaison/signaling-docs",
+  "version": "1.0.0",
+  "description": "Documentation for Liaison Signaling",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npx vuepress dev",
+    "build": "npx vuepress build"
+  },
+  "keywords": [
+    "liaison",
+    "signaling",
+    "documentation"
+  ],
+  "author": "Luis Valencia",
+  "license": "ISC",
+  "dependencies": {
+    "@vuepress/theme-default": "^1.0.3",
+    "vuepress": "^1.0.2"
+  }
+}
