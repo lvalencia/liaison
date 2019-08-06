@@ -6,7 +6,7 @@ import json from 'rollup-plugin-json';
 export default [{
     input: 'index.js',
     output: {
-        file: 'dist/index.js',
+        file: 'dist/liaison.js',
         format: 'iife',
         name: 'Liaison'
     },

@@ -1,6 +1,6 @@
 ---
 home: true
-tagline: A library and service for establishing many to many P2P communication.
+tagline: A library and service for establishing many to many serverless P2P communication.
 heroText: Liaison
 actionText: Get Started ->
 actionLink: /get-started/
@@ -17,17 +17,17 @@ features:
        link: /client/
 faqs:
   - question: How much do the signaling services cost?
-    answer: Check out <a href="/pricing">the pricing details page</a> for more information.
+    answer: Right now we're in alpha so they are free. For details about future pricing, check out <a href="/pricing">the pricing details page</a> for more information.
   - question:  How big of a mesh network can I create?
     answer:  As big as the network conditions and devices for the peers your trying to connect allows.
   - question: Are there any libraries for mobile clients?
     answer: Not yet, those libraries are currently under development.
+  - question: Do I need an API key or account to consume the services?
+    answer: Since we are currently in alpha and presumably you're an alpha participant you do not need an account nor an API key to consume our services.
   - question: Can client's communicate across different systems?
     answer: Yes, the libraries are compatible with each other across different systems such as iOS, Android, Web, etc.
-  - question: How can I submit a bug?
-    answer:  File a bug by emailing us at <a href="mailto:liaison+bugs@gmail.com">liaison+bugs@gmail.com</a> with environment information and replication steps and we'll investigate it.
-  - question: How can I provide feedback?
-    answer:  Shoot us an email <a href="mailto:liaison+support@gmail.com">liaison+support@gmail.com</a> we'd love to hear what you think about our products and services.
+  - question: How can I provide feedback or report issues I am having?
+    answer:  To provide general feedback, shoot us an email <a href="mailto:liaison+support@gmail.com">liaison+support@gmail.com</a> we'd love to hear what you think about our products and services. If you wish to file a bug, email us at <a href="mailto:liaison+bugs@gmail.com">liaison+bugs@gmail.com</a> with environment information and replication steps and we'll investigate it. 
 
     
 footer: >

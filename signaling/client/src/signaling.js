@@ -1,12 +1,5 @@
 import _ from 'underscore';
 
-const uuid = function uuidv4() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-        let r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-        return v.toString(16);
-    });
-};
-
 const SIGNALING_WS_URL = 'wss://5qucnj0ap2.execute-api.us-east-1.amazonaws.com/dev';
 
 const ACTION = {
@@ -47,7 +40,7 @@ const Signaling = {
     onOpenChannel(callback) {
         this.on(ACTION.OPEN_CHANNEL, (function openChannelAugmentedCallback(message) {
             this._openChannelCallback(message);
-            callback(message);
+            callback(_.pick(message, 'channel'));
         }).bind(this));
         return this;
     },
@@ -150,14 +143,39 @@ const Signaling = {
     },
     _createConnection({label, createDataChannel = true}) {
         const configuration = {
+            // @TODO - Roll out your own STUN and TURN servers
             iceServers: [
-                {urls: "stun:stun.1.google.com:19302"}
+                {
+                    url: 'stun:global.stun.twilio.com:3478?transport=udp',
+                    urls: 'stun:global.stun.twilio.com:3478?transport=udp'
+                },
+                {
+                    url: 'turn:global.turn.twilio.com:3478?transport=udp',
+                    username:
+                        'ba73d642f44d9852d32ff029d0f0e5f2d7c0e57097dd6c94cdc06bfac7dde5a8',
+                    urls: 'turn:global.turn.twilio.com:3478?transport=udp',
+                    credential: 'S/jTxZzSg2LttGoVzOlQT+SCoCLe7F5rWChWvAlJ9yg='
+                },
+                {
+                    url: 'turn:global.turn.twilio.com:3478?transport=tcp',
+                    username:
+                        'ba73d642f44d9852d32ff029d0f0e5f2d7c0e57097dd6c94cdc06bfac7dde5a8',
+                    urls: 'turn:global.turn.twilio.com:3478?transport=tcp',
+                    credential: 'S/jTxZzSg2LttGoVzOlQT+SCoCLe7F5rWChWvAlJ9yg='
+                },
+                {
+                    url: 'turn:global.turn.twilio.com:443?transport=tcp',
+                    username:
+                        'ba73d642f44d9852d32ff029d0f0e5f2d7c0e57097dd6c94cdc06bfac7dde5a8',
+                    urls: 'turn:global.turn.twilio.com:443?transport=tcp',
+                    credential: 'S/jTxZzSg2LttGoVzOlQT+SCoCLe7F5rWChWvAlJ9yg='
+                }
             ]
         };
 
         const rtcPeerConnection = new RTCPeerConnection(configuration);
         let dataChannel;
-        if (createDataChannel){
+        if (createDataChannel) {
             dataChannel = rtcPeerConnection.createDataChannel(label);
             dataChannel.onmessage = this.messageCallback;
         } else {
@@ -179,7 +197,7 @@ const Signaling = {
         connection.dataChannel = channel;
         connection.dataChannel.onmessage = this.messageCallback;
     },
-    async _establishConnection({rtcPeerConnection, channel, member}){
+    async _establishConnection({rtcPeerConnection, channel, member}) {
         try {
             const offer = await rtcPeerConnection.createOffer();
             await rtcPeerConnection.setLocalDescription(offer);
@@ -276,7 +294,9 @@ const Signaling = {
         let {rtcPeerConnection} = this._connectionForLabel(sender);
 
         try {
-            await rtcPeerConnection.addIceCandidate(candidate);
+            if (candidate) {
+                await rtcPeerConnection.addIceCandidate(new RTCIceCandidate(candidate));
+            }
         } catch (e) {
             console.log(e);
         }
@@ -293,7 +313,7 @@ const Signaling = {
             this.rtcConnections.push(connection);
         }
 
-       return connection;
+        return connection;
     },
     // Getters / Setters
     get rtcConnections() {

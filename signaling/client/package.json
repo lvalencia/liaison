@@ -1,9 +1,10 @@
 {
-  "name": "@liaison/signaling-client",
+  "name": "@liaison/client",
   "version": "1.0.0",
   "description": "JS Web Client for consuming Signaling service endpoints",
-  "main": "./dist/index.js",
+  "main": "./dist/liaison.js",
   "scripts": {
+    "clean": "rm -rf ./dist",
     "build": "npx rollup --config rollup.config.js",
     "watch": "npx rollup --config rollup.config.js --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
