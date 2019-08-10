@@ -6,12 +6,12 @@ actionText: Get Started ->
 actionLink: /get-started/
 features: 
   - title: Signaling 
-    details: Simple, fast, cost-effective managed service that allows you to connect peers together for the purpose of discovery without having to think about servers. Liaison Signaling provides let's you focusing on establishing P2P by providing API's for the purpose of signaling and discovery without the hassle of provisioning, managing, and scaling your own fleet. Pay only for what you use.
+    details: A simple, fast, and cost-effective managed service that enables you to create peer to peer communication without having to think about servers. Liaison Signaling lets you focus on building your P2P app by providing APIs that enable you to create direct connections without the hassle of provisioning, managing, and scaling your own fleet. Pay only for what you use.
     button:
        text:  Read the full Spec
        link: /apis/
   - title: JavaScript Client Library
-    details: Liaison provides a JS Web Client Library for establishing many-to-many P2P connections over the web. The client consumes the signaling services, and creates a mesh network of WebRTC P2P connections that are managed for you through the client. It makes the minimum amount of calls it needs to the services to set up a connection, and provides a consumable interface so you can focus on building your web application.
+    details: Liaison provides a JS Web Client Library for establishing many-to-many P2P connections over the web. The client consumes the signaling services and creates a mesh network of WebRTC P2P connections that are managed for you through the client. It makes the minimum amount of calls it needs to the services to set up a connection, and provides a consumable interface so you can focus on building your web application.
     button:
        text: Learn more about the JS Client
        link: /client/

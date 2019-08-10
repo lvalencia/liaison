@@ -108,7 +108,7 @@ in a channel.
 <head>
     <meta charset="UTF-8">
     <title>Sample Web Client</title>
-    <script src="http://liaison-client.shootthebit.com.s3-website-us-east-1.amazonaws.com/liaison.js"></script>
+    <script src="http://liaison-client.shootthebit.com/liaison.js"></script>
     <script type="text/javascript">
         function onDOMContentLoaded() {
             window.liaison = Object.create(Liaison);
@@ -415,7 +415,7 @@ liaison.connect(() => {
 ```
 :::
 
-You can try out this code by either running it yourself across multiple clients, or navigating to the [demo website](http://liaison-demo.shootthebit.com.s3-website-us-east-1.amazonaws.com)
+You can try out this code by either running it yourself across multiple clients, or navigating to the [demo website](http://liaison-demo.shootthebit.com/)
 
 ::: danger Signaling message sending back-channel
 If there's a case that is not covered where you need to send messages to member of a channel through the liaison
