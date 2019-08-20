@@ -27,7 +27,7 @@ faqs:
   - question: Can client's communicate across different systems?
     answer: Yes, the libraries are compatible with each other across different systems such as iOS, Android, Web, etc.
   - question: How can I provide feedback or report issues I am having?
-    answer:  To provide general feedback, shoot us an email <a href="mailto:liaison+support@gmail.com">liaison+support@gmail.com</a> we'd love to hear what you think about our products and services. If you wish to file a bug, email us at <a href="mailto:liaison+bugs@gmail.com">liaison+bugs@gmail.com</a> with environment information and replication steps and we'll investigate it. 
+    answer:  To provide general feedback, shoot us an email <a href="mailto:liaison.alpha.feedback@gmail.com">liaison.alpha.feedback@gmail.com</a> we'd love to hear what you think about our products and services. If you wish to file a bug, email us at <a href="mailto:liaison.alpha.feedback+bugs@gmail.com">liaison.alpha.feedback+bugs@gmail.com</a> with environment information and replication steps and we'll investigate it. 
 
     
 footer: >

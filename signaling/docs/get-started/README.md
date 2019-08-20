@@ -426,7 +426,7 @@ discussed above leverage the liaison object's `on` and `off` methods for subscri
 send through the services, and you can send custom messages using the private `_send` method.
 
 If however you find yourself thinking that you need to do this, I would first reach out to support 
-<a href="mailto:liaison+support@gmail.com">liaison+support@gmail.com</a> to see if it's a valid use-case.
+<a href="mailto:liaison.alpha.feedback+support@gmail.com">liaison.alpha.feedback+support@gmail.com</a> to see if it's a valid use-case.
 :::
 
 ## Learn More

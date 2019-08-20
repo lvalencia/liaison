@@ -111,7 +111,7 @@ In that situation, the message would look like the following:
 
 In this scenario the TTL would be in seconds.
 
-If you'd like to see this change or want to provide input into the API's send us an email at <a href="mailto:liaison+apis@gmail.com">liaison+apis@gmail.com</a>
+If you'd like to see this change or want to provide input into the API's send us an email at <a href="mailto:liaison.alpha.feedback+apis@gmail.com">liaison.alpha.feedback+apis@gmail.com</a>
 :::
 
 ### joinChannel
