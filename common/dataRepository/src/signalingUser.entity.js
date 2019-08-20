@@ -11,11 +11,11 @@ Object.defineProperty(SignalingUser, DynamoDbTable, {
 
 Object.defineProperty(SignalingUser, DynamoDbSchema, {
     value: {
-        connectionId: {
+        channelId: {
             keyType: KeyTypes.HASH,
             type: 'String'
         },
-        channelId: {
+        connectionId: {
             keyType: KeyTypes.RANGE,
             type: 'String'
         },
@@ -28,11 +28,6 @@ Object.defineProperty(SignalingUser, DynamoDbSchema, {
     enumerable: false
 });
 
-const CHANNEL_ID_CONNECTION_ID_INDEX = 'channelId-connectionId-index';
-
 module.exports = {
-    SignalingUser,
-    SignalingUserIndices: {
-        CHANNEL_ID_CONNECTION_ID_INDEX
-    }
+    SignalingUser
 };

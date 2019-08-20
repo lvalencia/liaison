@@ -233,7 +233,7 @@ If the request is malformed the action will return a message with the following 
     "errorType": "AttributeMissingException",
     "errorMessage": "Message does not specify [attribute] in body:",
     "data": {
-        "action": "joinChannel",
+        "action": "sendMessage",
         ... the rest of the original message sent ...
     }
 }

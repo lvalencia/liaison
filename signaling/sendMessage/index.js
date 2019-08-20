@@ -3,8 +3,7 @@ const _ = require('underscore');
 const {
     CreateDataRepository,
     Entities: {
-        SignalingUser,
-        SignalingUserIndices
+        SignalingUser
     }
 } = require('@liaison/common-data-repository');
 const {ConnectionResponder} = require('@liaison/common-communication');
@@ -63,9 +62,7 @@ exports.handler = async function (event, context) {
     };
     Object.setPrototypeOf(queryUsers, SignalingUser);
 
-    let connections = await dataRepo.queryAsync(queryUsers, {
-        indexName: SignalingUserIndices.CHANNEL_ID_CONNECTION_ID_INDEX
-    });
+    let connections = await dataRepo.queryAsync(queryUsers);
 
     const meta = {
         sender: connectionId,
