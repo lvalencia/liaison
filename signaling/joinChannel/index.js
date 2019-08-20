@@ -10,8 +10,7 @@ const http = require('http-status-codes');
 const {
     CreateDataRepository,
     Entities: {
-        SignalingUser,
-        SignalingUserIndices
+        SignalingUser
     }
 } = require('@liaison/common-data-repository');
 const {
@@ -85,9 +84,7 @@ exports.handler = async function (event, context) {
     };
     Object.setPrototypeOf(queryUsers, SignalingUser);
 
-    let connections = await dataRepo.queryAsync(queryUsers, {
-        indexName: SignalingUserIndices.CHANNEL_ID_CONNECTION_ID_INDEX
-    });
+    let connections = await dataRepo.queryAsync(queryUsers);
 
     Object.assign(responder, {
         data: {
@@ -98,8 +95,7 @@ exports.handler = async function (event, context) {
             data: {
                 user: connectionId,
                 channel: channelId,
-                members: connections.map(({connectionId}) => connectionId),
-                message: `user ${connectionId} has joined channel ${channelId}`
+                members: connections.map(({connectionId}) => connectionId)
             }
         }
     });

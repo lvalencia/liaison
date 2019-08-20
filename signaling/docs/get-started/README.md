@@ -301,9 +301,8 @@ channel id, for example
 liaison.joinChannel(channel);
 ```
 
-this will establish a direct P2P connection between the two clients meaning that they can now communicate 
-via `sendMessage` without the help of the signaling services. At this point the two clients are ready to exchange
-messages freely.
+this will make a call to the Liaison services to add the calling client to the channel so that the client
+can begin establishing P2P connections between the clients in the channel.
 
 ::: warning Note that you need a method of channel discovery
 As part of Signaling you also need to account for discovery, there are many ways to share this channel id 
@@ -316,7 +315,7 @@ on the joinChannel API checkout the [API reference](/apis).
 :::
 
 Again if we want to be able to react to the event when it succeeds, we need to set a callback for when the client
-successfully joins the channel prior ot our `joinChannel` call.
+successfully joins the channel prior to our `joinChannel` call.
 
 ```javascript
 liaison.onJoinChannel((message) => {
@@ -329,6 +328,9 @@ liaison.onJoinChannel((message) => {
     */
 });
 ```
+
+When this is called, the client will begin establishing direct P2P connections between all clients on the channel. 
+This means that they can now communicate via `sendMessage` without the help of the signaling services. 
 
 At this point in our code, we can now have as many clients jump in as we want and they will all connect to each other 
 in a direct P2P mesh as they join the channel. 
