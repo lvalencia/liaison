@@ -3,6 +3,8 @@
 Liaison is a project to facilitate P2P direct communication through WebRTC. It implements solutions for 
 User discovery and communication, Signaling, NAT/Firewall Traversal, and Relay for P2P fail-overs.
 
+http://liaison.shootthebit.com/
+
 ## Packages
 
 The following packages are in this repo.
