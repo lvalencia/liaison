@@ -25,7 +25,7 @@
     "@liaison/common-exceptions": "1.0.0",
     "@liaison/common-utils": "1.0.0",
     "amazon-dax-client": "^1.2.2",
-    "aws-sdk": "^2.496.0",
+    "aws-sdk": "^2.814.0",
     "module-alias": "^2.2.0",
     "underscore": "^1.9.1"
   },
